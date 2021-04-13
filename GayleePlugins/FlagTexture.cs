@@ -8,8 +8,6 @@
 // URL:
 // Help:
 #region UICode
-IntSliderControl xOffset = 0; // [-50,50] x Offset
-IntSliderControl yOffset = 0; // [-50,50] y Offset
 ListBoxControl FlagList = 0; // Flag|TransFlag|LesbianFlag|PanFlag|GayFlag|EnbyFlag|BisexualFlag|AceFlag
 #endregion
 ColorBgra[][] Flags;
@@ -34,7 +32,7 @@ void Render(Surface dst, Surface src, Rectangle rect)
     // Step through each row of the current rectangle
     for (int y = rect.Top; y < rect.Bottom; y++)
     {
-        float currentFraction = (float)(y - EnvironmentParameters.SelectionBounds.Top - yOffset)/(float)(EnvironmentParameters.SelectionBounds.Height);
+        float currentFraction = (float)(y - EnvironmentParameters.SelectionBounds.Top)/(float)(EnvironmentParameters.SelectionBounds.Height);
         currentFraction = Clamp(currentFraction);
         //Debug.WriteLine(currentFraction);
 
@@ -46,15 +44,12 @@ void Render(Surface dst, Surface src, Rectangle rect)
             ColorBgra SrcPixel = src[x, y];
             ColorBgra DstPixel = dst[x,y];
             ColorBgra CurrentPixel = SrcPixel;
-            //if current pixel is transparent, copy pixel on the left/top 
-            if (SrcPixel.A < 100)
+
+            if(CheckBounds(EnvironmentParameters.SelectionBounds, x, y))
             {
-                if(CheckBounds(EnvironmentParameters.SelectionBounds, x - xOffset, y - yOffset))
-                {
-                    ShadowColor = colorScheme[(int)Math.Floor(currentFraction * colorScheme.Length)];
-                    CurrentPixel = ShadowColor;
-                    CurrentPixel.A = src[x - xOffset, y - yOffset].A;
-                }
+                ShadowColor = colorScheme[(int)Math.Floor(currentFraction * colorScheme.Length)];
+                CurrentPixel = ShadowColor;
+                CurrentPixel.A = src[x, y].A;
             }
             
             dst[x,y] = CurrentPixel;
