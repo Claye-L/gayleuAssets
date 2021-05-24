@@ -1,0 +1,9 @@
+Box numbers: Microsoft sans serif
+Player names: yu gothic
+Titles: Noto Serif
+
+banner
+Title: consolas size 84
+
+fonts of interest:
+inter-bold-italic
