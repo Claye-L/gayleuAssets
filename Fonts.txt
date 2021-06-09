@@ -7,3 +7,5 @@ Title: consolas size 84
 
 fonts of interest:
 inter-bold-italic
+
+inter semi bold
